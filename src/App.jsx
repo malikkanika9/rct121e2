@@ -1,19 +1,19 @@
-import {Routes,Route} from "react-router-dom"
-import { Dashboard } from './Pages/Dashboard'
-import { PageOne } from './Pages/RegisterPageOne'
-import { PageTwo } from './Pages/RegisterPageTwo'
-import { PrivateRoute } from './Pages/PrivateRoute'
-function App() {
+import { Link } from "react-router-dom";
+import AllRoutes from "./Pages/AllRoutes";
+
+
+export default function App() {
+  
   return (
     <div className="App">
-      <Routes>
-       
-        <Route path="/dashboard" element={<PrivateRoute><Dashboard/></PrivateRoute>}/>
-        <Route path="/register/one" element={<PageOne/>}/>
-        <Route path="/register/two" element={<PrivateRoute><PageTwo/></PrivateRoute>}/>
-      </Routes>
+    <div><Link to={"/register/one"}>register</Link></div>
+      <AllRoutes/>
     </div>
-  )
+  );
 }
 
-export default App
+
+
+
+
+

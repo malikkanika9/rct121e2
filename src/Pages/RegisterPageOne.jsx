@@ -1,43 +1,30 @@
-import { useState } from "react"
+import React, { useContext } from 'react'
+import { Link } from 'react-router-dom';
+import {RegistrationContext} from "../Context/RegistrationContextProvider"
 
-import { useNavigate } from "react-router-dom"
-import { useContext } from "react"
-import { RegistrationContex } from "../context/RegistrationContextProvider"
-import { AuthContext } from "../context/AuthContext"
-export const PageOne=()=>{
-    const navigate=useNavigate()
-    const [isAuth,handleAuth]=useContext(AuthContext)
-    const [username,email,address,phone,dispatch]=useContext(RegistrationContex)
-    const [tempusername,setUsername]=useState("")
-    const [tempemail, setemail]=useState("")
-  function changepage(){
-      if(tempusername!=""&&tempemail!=""){
-          dispatch({
-              type:"username",
-              payload:tempusername
-          })
-          dispatch({
-              type:"email",
-              payload:tempemail
-          })
-          handleAuth(true)
-         navigate("/register/two", {replace:false})
-      }
-      else{
-          alert("Please enter username and email")
-      }
-    
-   
-  }
- 
-
-    return (
-        <div className="container" >
-            <div className="inputs">
-            <input type="text" placeholder="username" onChange={(e)=>{setUsername(e.target.value)}}/>
-             <input type="email" placeholder="email"onChange={(e)=>{setemail(e.target.value)}} />
-            </div>
-           <button className="nextbtn" onClick={changepage}>Next</button>
-        </div>
-    )
+const initialFormState = {
+    name :"",
+    email:"",
+    phone:"",
+    address:""
 }
+
+function RegisterPageOne() {
+    const [state,dispatch] = useContext(RegistrationContext,initialFormState);
+    const handelchange = (e)=>{
+        dispatch({
+            type:"Handele Input",
+            field:e.target.name,
+            payload:e.target.value,
+        });
+    }
+  return (
+    <div>
+        <input type="text" onChange={handelchange} name="name" value={state.name} placeholder='enter your pwd'/>
+        <input type="text" onChange={handelchange} name="email" value={state.email} placeholder='enter your mail'/>
+        <button disabled={state.name ==""}  ><Link to="/register/two">next</Link></button>
+    </div>
+  )
+}
+
+export default RegisterPageOne

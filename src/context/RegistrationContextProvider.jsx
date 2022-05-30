@@ -1,55 +1,23 @@
-import React, { useReducer } from "react";
+import React from 'react'
+import { createContext,useReducer } from "react";
+import registerReducer from "./registerReducer"
+export const RegistrationContext = createContext();
 
-// write reducer for the registartion reducer
-
-export const initState={
-    username:"",
+const  iniState = {
+    number:"",
     email:"",
     address:"",
-    phone:null
-    }
-    
-    export const RegisterActions={
-     "username": "username",
-    "email":"email",
-    "address":"address",
-     "phone":"phone"
-    }
-    export const reducer=(state,action)=>{
-        switch(action.type){
-            case RegisterActions.username:{
-                return({
-                    ...state,
-                    username:action.payload
-                })
-            }
-            case RegisterActions.address:{
-                return({
-                    ...state,
-                    address:action.payload
-                })
-            }
-            case RegisterActions.email:{
-                return({
-                    ...state,
-                   email:action.payload
-                })
-            }
-            case RegisterActions.phone:{
-                return({
-                    ...state,
-                    phone:action.payload
-                })
-            }
-        }
-    
-    }
-export const RegistrationContex= React.createContext()
-export const RegistrationContexProvider=({children})=>{
-    
-    const[{username,email,address,phone},dispatch]=useReducer(reducer,initState)
-
-    return(
-        <RegistrationContex.Provider value={[username,email,address,phone,dispatch]}>{children}</RegistrationContex.Provider>
-    )
+    phone:""
 }
+
+function RegistrationContextProvider({children}) {
+    const [state,dispatch] = useReducer(registerReducer,iniState);
+  return (
+    <RegistrationContext.Provider value = {[state,dispatch]}>
+            {children}
+    </RegistrationContext.Provider>
+  
+  )
+}
+
+export default RegistrationContextProvider

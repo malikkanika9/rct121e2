@@ -1,11 +1,14 @@
-import { useContext } from "react"
-import { Navigate } from "react-router-dom"
-
-import { AuthContext } from "../context/AuthContext"
-export const PrivateRoute=({children})=>{
-    const [isAuth]=useContext(AuthContext)
+import React, { useContext } from 'react'
+import { Navigate } from 'react-router-dom'
+import { AuthContext } from '../Context/AuthContext'
+function PrivateRoute({children,to}) {
+    const [isAuth] = useContext(AuthContext)
     if(isAuth){
         return children
     }
-     return <Navigate to="/register/one"/>
+  return (
+    <Navigate to ={to || "/dashboard"}></Navigate>
+  )
 }
+
+export default PrivateRoute
